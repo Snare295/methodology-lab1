@@ -40,5 +40,3 @@ git clone https://github.com/Snare295/methodology-lab1
 ```
 
 ### 3. Run <code> dart run</code> in folder of clone
-
-trash for revert commit
