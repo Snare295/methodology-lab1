@@ -4,6 +4,7 @@ import 'dart:math';
 main() {
   double a, b, c;
   int? progMode;
+  bool? bExceptionCaught;
 
   //Reading user input of program mode
   stdout.write("Select program mode 1 or 2\n");
@@ -24,9 +25,16 @@ main() {
   if (progMode == 1) {
     (a, b, c) = progModeInteractive();
   } else if (progMode == 2) {
-    (a, b, c) = progModeFile();
+    (a, b, c, bExceptionCaught) = progModeFile();
   } else {
     throw "Unexpected behaviour: progMode isn't 1 or 2";
+  }
+
+  //Handling exception
+  if (bExceptionCaught == true) {
+    stdout.write("Error. Invalid text file formating, check README.md");
+    stdin.readLineSync();
+    return 1;
   }
 
   //Calculating and writing in terminal
@@ -131,7 +139,7 @@ bool isNumber(String? s) {
   return (a!, b!, c!);
 }
 
-(double, double, double) progModeFile() {
+(double, double, double, bool) progModeFile() {
   double? a, b, c;
   String? inp;
   List<int> content;
@@ -154,23 +162,25 @@ bool isNumber(String? s) {
 
   content = File(inp).readAsBytesSync();
   if (content.isEmpty) {
-    throw "Error. File is empty";
+    return (0, 0, 0, true);
   }
 
   int first = content.indexOf(32);
   a = double.tryParse(String.fromCharCodes(content.take(first).toList()));
   if (a == null) {
-    throw "Error. Invalid file formating, check README.md";
+    return (0, 0, 0, true);
+  } else {
+    stdout.writeln("a is $a");
   }
-  stdout.writeln("a is $a");
 
   int second = content.indexOf(32, first + 2);
   b = double.tryParse(
       String.fromCharCodes(content.getRange(first, second).toList()));
   if (b == null) {
-    throw "Error. Invalid file formating, check README.md";
+    return (0, 0, 0, true);
+  } else {
+    stdout.writeln("b is $b");
   }
-  stdout.writeln("b is $b");
 
   int third = content.indexOf(13, second + 2);
   if (third == -1) {
@@ -179,9 +189,10 @@ bool isNumber(String? s) {
   c = double.tryParse(
       String.fromCharCodes(content.getRange(second, third).toList()));
   if (c == null) {
-    throw "Error. Invalid file formating, check README.md";
+    return (0, 0, 0, true);
+  } else {
+    stdout.writeln("c is $c");
   }
-  stdout.writeln("c is $c");
 
-  return (a, b, c);
+  return (a, b, c, false);
 }
