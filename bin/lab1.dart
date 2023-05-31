@@ -22,7 +22,7 @@ main(){
     return;
   }
   
-  int an = int.parse(a);
-  int bn = int.parse(b);
-  int cn = int.parse(b);
+  double an = double.parse(a);
+  double bn = double.parse(b);
+  double cn = double.parse(c);
 }
