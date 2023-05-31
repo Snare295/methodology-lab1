@@ -47,6 +47,9 @@ main() {
   } else {
     stdout.write("There are 0 roots\n");
   }
+
+  //Pause after complition
+  stdin.readLineSync();
 }
 
 bool isNumber(String? s) {
