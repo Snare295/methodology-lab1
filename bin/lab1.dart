@@ -71,15 +71,14 @@ bool isNumber(String? s){
   double discr;
 
   discr = pow(b,2) - (4*a*c);
-  print(discr); 
+
   if(discr >= 0){
     x1 = (-b + sqrt(discr)) / (2*a);
   }
   if(discr > 0) {
     x2 = (-b - sqrt(discr)) / (2*a);
   }
-  print(x1);
-  print(x2);
+
   return (x1, x2);
 } 
 
