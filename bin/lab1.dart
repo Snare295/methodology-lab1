@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -83,9 +84,10 @@ bool isNumber(String? s){
 } 
 
 (double, double, double) progModeInteractive(){
+  double? a,b,c;
   String? inp;
   bool? ver;
-  double? a,b,c;
+
   //Input for var a
   do{
     ver = false;
@@ -136,7 +138,49 @@ return (a!, b!, c!);
 
 (double, double, double) progModeFile(){
   double? a,b,c;
+  String? inp;
+  List<int> content;
 
+  //Reading path of file
+  do{
+    stdout.write("Write path of file: ");
+    inp = stdin.readLineSync();
+    
+    if(inp == null && inp == ""){
+      stdout.write("Error. Empty input\n");
+    } else
+    if(File(inp!).existsSync() == false){
+      stdout.write("Error. Invalid path\n");
+    } else
+    if(RegExp(".txt\$").hasMatch(inp) == false){
+      stdout.write("Error. Invalid file extension, need *.txt");
+    } else {
+      break;
+    }
+  } while (true);  
+  
+  content = File(inp).readAsBytesSync();
+  
+  int first = content.indexOf(32);
+  a = double.tryParse(String.fromCharCodes(content.take(first).toList()));
+  if(a == null){
+    throw "Error. Invalid file formating, check README.md";
+  }
+  stdout.writeln("a is $a");
 
-  return (a!, b!, c!);
+  int second = content.indexOf(32, first+2);
+  b = double.tryParse(String.fromCharCodes(content.getRange(first, second).toList()));
+  if(b == null){
+    throw "Error. Invalid file formating, check README.md";
+  }
+  stdout.writeln("b is $b");
+
+  int third = content.indexOf(13, second+2);
+  c = double.tryParse(String.fromCharCodes(content.getRange(second, third).toList()));
+  if(c == null){
+    throw "Error. Invalid file formating, check README.md";
+  }
+  stdout.writeln("c is $c");
+
+  return (a, b, c);
 }
