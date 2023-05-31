@@ -40,3 +40,7 @@ git clone https://github.com/Snare295/methodology-lab1
 ```
 
 ### 3. Run <code> dart run</code> in folder of clone
+
+#
+
+*revert commit https://github.com/Snare295/methodology-lab1/commit/9b2b8dca8c85c09503f2c542af3df3e0222a7be3*
