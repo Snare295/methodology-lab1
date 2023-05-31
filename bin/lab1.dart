@@ -150,6 +150,9 @@ bool isNumber(String? s) {
   } while (true);
 
   content = File(inp).readAsBytesSync();
+  if (content.isEmpty) {
+    throw "Error. File is empty";
+  }
 
   int first = content.indexOf(32);
   a = double.tryParse(String.fromCharCodes(content.take(first).toList()));
@@ -167,6 +170,9 @@ bool isNumber(String? s) {
   stdout.writeln("b is $b");
 
   int third = content.indexOf(13, second + 2);
+  if (third == -1) {
+    third = content.length;
+  }
   c = double.tryParse(
       String.fromCharCodes(content.getRange(second, third).toList()));
   if (c == null) {
