@@ -7,6 +7,10 @@ App have 2 modes to interact with input of coefficients a,b,c:
 - Non-interactive or File 2: write a path to .txt file, where layout is
    [a`<space>`b`<space>`c], for better understanding see exm.txt
 
+## How to run
+
+Just run lab1.exe from bin folder
+
 ## How to install
 
 1.1 Use official guideline: https://dart.dev/get-dart
