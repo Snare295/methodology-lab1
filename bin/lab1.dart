@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
 
@@ -166,6 +167,9 @@ bool isNumber(String? s) {
   }
 
   int first = content.indexOf(32);
+  if (first == -1) {
+    return (0, 0, 0, true);
+  }
   a = double.tryParse(String.fromCharCodes(content.take(first).toList()));
   if (a == null) {
     return (0, 0, 0, true);
@@ -173,7 +177,10 @@ bool isNumber(String? s) {
     stdout.writeln("a is $a");
   }
 
-  int second = content.indexOf(32, first + 2);
+  int second = content.indexOf(32, first + 1);
+  if (second == -1) {
+    return (0, 0, 0, true);
+  }
   b = double.tryParse(
       String.fromCharCodes(content.getRange(first, second).toList()));
   if (b == null) {
@@ -182,9 +189,19 @@ bool isNumber(String? s) {
     stdout.writeln("b is $b");
   }
 
-  int third = content.indexOf(13, second + 2);
+  int third = content.lastIndexOf(10);
+  if (third != content.indexOf(10)) {
+    stdout.writeln(
+        "Found multiple LF, likely you using linux, remove new line at end of file");
+    return (0, 0, 0, true);
+  }
   if (third == -1) {
+    stdout.writeln(
+        "LF not found in file, likely you using windows because it doesn't place LF at end of file. Continue as you have LF");
     third = content.length;
+  }
+  if (content.indexOf(32, second + 1) != -1) {
+    return (0, 0, 0, true);
   }
   c = double.tryParse(
       String.fromCharCodes(content.getRange(second, third).toList()));
